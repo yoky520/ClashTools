@@ -1623,6 +1623,7 @@ def main(args):
     clash_file = head + group_1 + group_1_2 + group_2 + group_3 + group_4 + group_5 + group_6 + group_7 + tail
     with open(path,'w') as f:
         f.write(clash_file)
+    print('转换成功！文件保存在:%s' % path)
 
 if __name__ == '__main__':
     main(sys.argv[1])
