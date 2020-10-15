@@ -1577,31 +1577,34 @@ def main(args):
     vmess_list = filter(lambda x: len(x)>10,contents)
     t = 1
     for i in vmess_list:
-        heard = i[:5]
-        content_ = i[8:]
-        js = base64.b64decode(content_)
-        dct = json.loads(js)  
-        redct = {
-            'name':'Node%03d' % t,
-            'type':heard,
-            'server':dct.get('add'),
-            'port':dct.get('port'),
-            'uuid':dct.get('id'),
-            'alterId':dct.get('aid'),
-            'cipher':'auto',
-            'tls':dct.get('tls'),
-            'network':dct.get('net'),
-            'ws-path':dct.get('path'),
-            'Host':dct.get('host')
-        }
-        if dct.get('tls'):
-            redct.update({'tls':True})
-        else:
-            redct.update({'tls':False})
-        if not dct.get('host'):
-            redct.update({'Host':dct.get('add')})
-        dict_lst.append(redct)
-        t += 1
+        try:
+            heard = i[:5]
+            content_ = i[8:]
+            js = base64.b64decode(content_)
+            dct = json.loads(js)  
+            redct = {
+                'name':dct.get('ps')+str(t),
+                'type':heard,
+                'server':dct.get('add'),
+                'port':dct.get('port'),
+                'uuid':dct.get('id'),
+                'alterId':dct.get('aid'),
+                'cipher':'auto',
+                'tls':dct.get('tls'),
+                'network':dct.get('net'),
+                'ws-path':dct.get('path'),
+                'Host':dct.get('host')
+            }
+            if dct.get('tls'):
+                redct.update({'tls':True})
+            else:
+                redct.update({'tls':False})
+            if not dct.get('host'):
+                redct.update({'Host':dct.get('add')})
+            dict_lst.append(redct)
+            t += 1
+        except Exception:
+            continue
     
      
     for i in dict_lst:
